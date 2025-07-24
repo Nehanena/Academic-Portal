@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Portal | Home</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --gray-color: #95a5a6;
+            --white-color: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 4px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .icon {
+            font-style: normal;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        nav ul li a.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+        }
+
+        .btn-large {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white-color);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalopen 0.5s;
+        }
+
+        @keyframes modalopen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: var(--dark-color);
+        }
+
+        .modal h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forgot-password {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .form-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Password Strength Meter */
+        .password-strength {
+            margin-top: 10px;
+            height: 5px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #strength-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--danger-color);
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        #strength-text {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-section p {
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><span class="icon">🎓</span> Academic Portal</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Research</a></li>
+                    <li><a href="#">Faculty</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><button id="signInBtn" class="btn">Sign In</button></li>
+                    <li><button id="signUpBtn" class="btn btn-outline">Sign Up</button></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Advancing Knowledge Through Research and Education</h2>
+                    <p>Join our academic community to access world-class resources, collaborate with researchers, and enhance your learning experience.</p>
+                    <div class="hero-buttons">
+                        <button id="heroSignUpBtn" class="btn btn-large">Get Started</button>
+                        <button class="btn btn-large btn-outline">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h3>Why Choose Our Academic Portal</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">📚</span>
+                        <h4>Extensive Library</h4>
+                        <p>Access to millions of academic papers, journals, and research materials.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">👥</span>
+                        <h4>Collaborative Tools</h4>
+                        <p>Work with researchers and students from around the world.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h4>Research Analytics</h4>
+                        <p>Track citations, downloads, and impact of your research work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign Up Modal -->
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Your Account</h2>
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" name="email" required>
+                    <small class="error-message" id="email-error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" required>
+                    <small class="error-message" id="password-error"></small>
+                    <div class="password-strength">
+                        <span id="strength-bar"></span>
+                        <span id="strength-text">Password Strength</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" name="confirm-password" required>
+                    <small class="error-message" id="confirm-password-error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="signup-role">I am a:</label>
+                    <select id="signup-role" name="role" required>
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="researcher">Researcher</option>
+                        <option value="faculty">Faculty Member</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="signup-terms" name="terms" required>
+                    <label for="signup-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    <small class="error-message" id="terms-error"></small>
+                </div>
+                <button type="submit" class="btn btn-block">Sign Up</button>
+            </form>
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToSignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome Back</h2>
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signin-email">Email Address</label>
+                    <input type="email" id="signin-email" name="email" required>
+                    <small class="error-message" id="signin-email-error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" name="password" required>
+                    <small class="error-message" id="signin-password-error"></small>
+                </div>
+                <div class="form-group row">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn-block">Sign In</button>
+            </form>
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Academic Portal</h4>
+                    <p>Advancing knowledge and learning through innovative technology and collaboration.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Library</a></li>
+                        <li><a href="#">Research Database</a></li>
+                        <li><a href="#">Academic Calendar</a></li>
+                        <li><a href="#">Faculty Directory</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><span class="contact-icon">✉️</span> contact@academicportal.edu</p>
+                    <p><span class="contact-icon">📞</span> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Academic Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal elements
+            const signUpModal = document.getElementById('signUpModal');
+            const signInModal = document.getElementById('signInModal');
+            const signUpBtn = document.getElementById('signUpBtn');
+            const signInBtn = document.getElementById('signInBtn');
+            const heroSignUpBtn = document.getElementById('heroSignUpBtn');
+            const switchToSignIn = document.getElementById('switchToSignIn');
+            const switchToSignUp = document.getElementById('switchToSignUp');
+            const closeButtons = document.querySelectorAll('.close');
+
+            // Form elements
+            const signUpForm = document.getElementById('signUpForm');
+            const signInForm = document.getElementById('signInForm');
+            const signupPassword = document.getElementById('signup-password');
+            const signupConfirmPassword = document.getElementById('signup-confirm-password');
+            const strengthBar = document.getElementById('strength-bar');
+            const strengthText = document.getElementById('strength-text');
+
+            // Open Sign Up Modal
+            function openSignUpModal() {
+                signUpModal.style.display = 'block';
+                signInModal.style.display = 'none';
+            }
+
+            // Open Sign In Modal
+            function openSignInModal() {
+                signInModal.style.display = 'block';
+                signUpModal.style.display = 'none';
+            }
+
+            // Close Modal
+            function closeModal() {
+                signUpModal.style.display = 'none';
+                signInModal.style.display = 'none';
+            }
+
+            // Event Listeners for buttons
+            signUpBtn.addEventListener('click', openSignUpModal);
+            signInBtn.addEventListener('click', openSignInModal);
+            heroSignUpBtn.addEventListener('click', openSignUpModal);
+            switchToSignIn.addEventListener('click', openSignInModal);
+            switchToSignUp.addEventListener('click', openSignUpModal);
+
+            // Close modal when clicking on X
+            closeButtons.forEach(button => {
+                button.addEventListener('click', closeModal);
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === signUpModal || event.target === signInModal) {
+                    closeModal();
+                }
+            });
+
+            // Password Strength Checker
+            signupPassword.addEventListener('input', function() {
+                const password = this.value;
+                const strength = checkPasswordStrength(password);
+                
+                strengthBar.style.width = strength.percentage + '%';
+                strengthBar.style.backgroundColor = strength.color;
+                strengthText.textContent = strength.text;
+                strengthText.style.color = strength.color;
+            });
+
+            function checkPasswordStrength(password) {
+                // Initialize variables
+                let strength = 0;
+                let messages = [];
+                
+                // Check for length
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                
+                // Check for uppercase letters
+                if (/[A-Z]/.test(password)) strength += 1;
+                
+                // Check for lowercase letters
+                if (/[a-z]/.test(password)) strength += 1;
+                
+                // Check for numbers
+                if (/[0-9]/.test(password)) strength += 1;
+                
+                // Check for special characters
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // Determine strength level
+                if (password.length === 0) {
+                    return {
+                        percentage: 0,
+                        color: 'transparent',
+                        text: ''
+                    };
+                } else if (password.length < 8) {
+                    return {
+                        percentage: 20,
+                        color: '#e74c3c',
+                        text: 'Too short'
+                    };
+                } else if (strength <= 2) {
+                    return {
+                        percentage: 40,
+                        color: '#e74c3c',
+                        text: 'Weak'
+                    };
+                } else if (strength <= 4) {
+                    return {
+                        percentage: 70,
+                        color: '#f39c12',
+                        text: 'Moderate'
+                    };
+                } else {
+                    return {
+                        percentage: 100,
+                        color: '#27ae60',
+                        text: 'Strong'
+                    };
+                }
+            }
+
+            // Form Validation
+            function showError(element, message) {
+                const errorElement = document.getElementById(element + '-error');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            function hideError(element) {
+                const errorElement = document.getElementById(element + '-error');
+                errorElement.style.display = 'none';
+            }
+
+            // Sign Up Form Validation
+            signUpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Validate Email
+                const email = document.getElementById('signup-email').value;
+                if (!email) {
+                    showError('email', 'Email is required');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('email', 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    hideError('email');
+                }
+
+                // Validate Password
+                const password = signupPassword.value;
+                if (!password) {
+                    showError('password', 'Password is required');
+                    isValid = false;
+                } else if (password.length < 8) {
+                    showError('password', 'Password must be at least 8 characters');
+                    isValid = false;
+                } else {
+                    hideError('password');
+                }
+
+                // Validate Confirm Password
+                const confirmPassword = signupConfirmPassword.value;
+                if (!confirmPassword) {
+                    showError('confirm-password', 'Please confirm your password');
+                    isValid = false;
+                } else if (password !== confirmPassword) {
+                    showError('confirm-password', 'Passwords do not match');
+                    isValid = false;
+                } else {
+                    hideError('confirm-password');
+                }
+
+                // Validate Role
+                const role = document.getElementById('signup-role').value;
+                if (!role) {
+                    showError('role', 'Please select your role');
+                    isValid = false;
+                } else {
+                    hideError('role');
+                }
+
+                // Validate Terms
+                const terms = document.getElementById('signup-terms').checked;
+                if (!terms) {
+                    showError('terms', 'You must agree to the terms and conditions');
+                    isValid = false;
+                } else {
+                    hideError('terms');
+                }
+
+                // If form is valid, submit it
+                if (isValid) {
+                    // Here you would typically send the data to a server
+                    alert('Sign up successful! Welcome to Academic Portal.');
+                    signUpForm.reset();
+                    closeModal();
+                }
+            });
+
+            // Sign In Form Validation
+            signInForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Validate Email
+                const email = document.getElementById('signin-email').value;
+                if (!email) {
+                    showError('signin-email', 'Email is required');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('signin-email', 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    hideError('signin-email');
+                }
+
+                // Validate Password
+                const password = document.getElementById('signin-password').value;
+                if (!password) {
+                    showError('signin-password', 'Password is required');
+                    isValid = false;
+                } else {
+                    hideError('signin-password');
+                }
+
+                // If form is valid, submit it
+                if (isValid) {
+                    // Here you would typically send the data to a server
+                    alert('Sign in successful! Welcome back.');
+                    signInForm.reset();
+                    closeModal();
+                }
+            });
+
+            // Real-time validation for sign up form
+            document.getElementById('signup-email').addEventListener('input', function() {
+                const email = this.value;
+                if (!email) {
+                    showError('email', 'Email is required');
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('email', 'Please enter a valid email address');
+                } else {
+                    hideError('email');
+                }
+            });
+
+            document.getElementById('signup-password').addEventListener('input', function() {
+                const password = this.value;
+                if (!password) {
+                    showError('password', 'Password is required');
+                } else if (password.length < 8) {
+                    showError('password', 'Password must be at least 8 characters');
+                } else {
+                    hideError('password');
+                }
+            });
+
+            document.getElementById('signup-confirm-password').addEventListener('input', function() {
+                const confirmPassword = this.value;
+                const password = document.getElementById('signup-password').value;
+                
+                if (!confirmPassword) {
+                    showError('confirm-password', 'Please confirm your password');
+                } else if (password !== confirmPassword) {
+                    showError('confirm-password', 'Passwords do not match');
+                } else {
+                    hideError('confirm-password');
+                }
+            });
+
+            document.getElementById('signup-role').addEventListener('change', function() {
+                if (this.value) {
+                    hideError('role');
+                }
+            });
+
+            document.getElementById('signup-terms').addEventListener('change', function() {
+                if (this.checked) {
+                    hideError('terms');
+                }
+            });
+
+            // Real-time validation for sign in form
+            document.getElementById('signin-email').addEventListener('input', function() {
+                const email = this.value;
+                if (!email) {
+                    showError('signin-email', 'Email is required');
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('signin-email', 'Please enter a valid email address');
+                } else {
+                    hideError('signin-email');
+                }
+            });
+
+            document.getElementById('signin-password').addEventListener('input', function() {
+                const password = this.value;
+                if (!password) {
+                    showError('signin-password', 'Password is required');
+                } else {
+                    hideError('signin-password');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
